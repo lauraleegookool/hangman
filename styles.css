@@ -1,0 +1,50 @@
+.hideButton{
+    text-align: center;
+}
+
+.output1{
+    text-align: center;
+}
+
+.output2{
+    text-align: center;
+}
+
+.output3{
+    text-align: center;
+}
+
+.hangingMan{
+    margin: auto;
+    width: 40%;
+    border: 2px solid pink;
+    padding: 10px;
+    display: none;
+}
+
+h1{
+    text-align: center;
+}
+
+.letter{
+    display: inline-block;
+    padding: 5px;
+    background-color: pink;
+    border: 1px solid #dddddd;
+    border-radius: 60px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 1.5em;
+}
+
+.letter2{
+    display: inline-block;
+    padding: 5px;
+    margin-left: 10px;
+    font-size: 3m;
+}
+
+.done{
+    cursor: default;
+    background-color: #dddddd;
+}

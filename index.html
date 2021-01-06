@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+    <body>
+        <head>
+            <title>Hangman!</title>
+            <link rel="stylesheet" href="styles.css">
+        </head>
+        <h1>Hangman</h1>
+        <div class="output1">
+            <button type="button" class="hideButton">Single Player</button>
+            <button type="button" class="hideButton">Two Players</button>
+        </div>
+        <div class="hangingMan">Pretend this is a man</div>
+        <div class="output2"></div>
+        <div class="output3"></div>
+        <div class="message"></div>
+
+        <script>
+            const myWords = ["decision", "anatomy", "powerful", "waterloo", "artist"]
+            const randomWordList = []
+            let turnsUsed = 0
+            let bad = 0;
+            let player = {};
+            const header = document.querySelector("h1");
+            const message = document.querySelector(".message");
+            const hangman = document.querySelector(".hangingMan");
+            const output1 = document.querySelector(".output1");
+            const output2 = document.querySelector(".output2");
+            const output3 = document.querySelector(".output3");
+            const button = document.querySelectorAll("button");
+
+            button[0].addEventListener("click", function(){
+                output1.style.display = "none";
+                hangman.style.display = "block";
+                startSinglePlayer();
+            })
+
+            function startSinglePlayer(){
+                myWords.sort(function(){
+                    return 0.5 - Math.random();
+                });
+                let word = myWords.shift();
+                player.solution = word.split("");
+                console.log(player.solution);
+                createLetterBoard();
+            }
+
+            function createLetterBoard(){
+                player.solution.forEach(element => {
+                    let div = document.createElement("div");
+                    div.classList.add("letter2");
+                    div.innerText = "_"
+                    div.myLetter = element;
+                    output2.appendChild(div);
+                });
+                let solutionLetter =  document.querySelectorAll(".letter2");
+                for(let i = 0; i<26;i++){
+                    let temp = String.fromCharCode(65+i);
+                    let div = document.createElement("div");
+                    div.classList.add("letter");
+                    div.myLetter = temp;
+                    div.innerHTML = temp;
+                    let action = function(e){
+                        if(!player.solution.includes(temp.toLowerCase())){
+                            bad++;
+                            if(bad == 6){
+                                hangman.innerHTML = "he died ):";
+                                header.innerHTML = "You killed him!";
+                                let allLetters = document.querySelectorAll(".letter");
+                                allLetters.forEach(element => {
+                                    element.classList.add("done");
+                                });
+                            }
+                        }
+                        div.removeEventListener("click", action);
+                        div.classList.add("done");
+                        solutionLetter.forEach(function(letter){
+                            if(letter.myLetter.toUpperCase() === temp){
+                                letter.innerHTML = temp;
+                                turnsUsed++;
+                            }
+                            if(turnsUsed === solutionLetter.length){
+                                header.innerHTML = "You won!"
+                            }
+                        });
+                    }
+                    div.addEventListener("click", action);
+                    output3.appendChild(div);
+                }
+            }
+        </script>
+    </body>
+</html>
