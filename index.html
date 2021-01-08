@@ -6,13 +6,13 @@
         </head>
         <h1>Hangman</h1>
         <div class="output1">
-            <button type="button" class="hideButton">Single Player</button>
-            <button type="button" class="hideButton">Two Players</button>
+            <button type="button" class="hideButton">Start</button>
         </div>
-        <div class="hangingMan">Pretend this is a man</div>
+        <div class="hangingMan">
+            <img id="pic" src="hangman0.png">
+        </div>
         <div class="output2"></div>
         <div class="output3"></div>
-        <div class="message"></div>
 
         <script>
             const myWords = ["decision", "anatomy", "powerful", "waterloo", "artist"]
@@ -26,15 +26,18 @@
             const output1 = document.querySelector(".output1");
             const output2 = document.querySelector(".output2");
             const output3 = document.querySelector(".output3");
-            const button = document.querySelectorAll("button");
+            const button = document.querySelector("button");
+            const pic = document.querySelector("#pic");
+            var pictureName = "hangman";
+            var pictureExt = ".png";
 
-            button[0].addEventListener("click", function(){
+            button.addEventListener("click", function(){
                 output1.style.display = "none";
                 hangman.style.display = "block";
-                startSinglePlayer();
+                start();
             })
 
-            function startSinglePlayer(){
+            function start(){
                 myWords.sort(function(){
                     return 0.5 - Math.random();
                 });
@@ -62,13 +65,16 @@
                     let action = function(e){
                         if(!player.solution.includes(temp.toLowerCase())){
                             bad++;
+                            console.log(pictureName + String(bad) + pictureExt);
+                            pic.src = pictureName + String(bad) + pictureExt;
                             if(bad == 6){
-                                hangman.innerHTML = "he died ):";
                                 header.innerHTML = "You killed him!";
                                 let allLetters = document.querySelectorAll(".letter");
                                 allLetters.forEach(element => {
                                     element.classList.add("done");
                                 });
+                                output2.style.display = "none";
+                                output3.style.display = "none";
                             }
                         }
                         div.removeEventListener("click", action);
